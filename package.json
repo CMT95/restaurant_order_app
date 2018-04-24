@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/CMT95/restaurant_order_app#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "ejs": "^2.5.9",
+    "express": "^4.16.3",
+    "mongodb": "^3.0.7",
+    "nodemon": "^1.17.3"
   }
 }
