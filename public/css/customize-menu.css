@@ -1,0 +1,41 @@
+body{
+    padding-top: 70px;
+}
+.container{
+    max-width: 960px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.cmPic{
+    height: 100px;
+    width: 100px;
+}
+
+.plusBtn{
+    height: 220px;
+    width: 185px;
+}
+
+#h1{
+    font-size: 40px;
+
+}
+
+.headlineWrapper{
+    text-align: center;
+    height: 100px;
+    background-color: lightgray;
+    margin-bottom: 20px;
+}
+
+.thumbnailHeader{
+    font-weight: bold;
+}
+
+.fa{
+    float: right;
+}
