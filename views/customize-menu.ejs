@@ -24,29 +24,34 @@
             <% for(var i=0; i<Categories.length; i++){%>
             <div class="col-lg-4 col-sm-6">
                 <div class="thumbnail">
-                    <span class="thumbnailHeader"><%= Categories[i].thumbnailHeader %></span>
-                    <i style="font-size:24px" class="fa">&#xf00d;</i>
-                        <img src="<%= Categories[i].img %>">
+                    <div>
+                        <span class="thumbnailHeader"><%= Categories[i].thumbnailHeader %></span>
+                        <i style="font-size:36px" class="fa">&#xf00d;</i>
+                        <i class="fa fa-edit" style="font-size:38px"></i>
+                    </div>
+
+                    <img src="<%= Categories[i].img %>">
+                
                 </div>
             </div>
            <% }%>
 
             <div class="col-lg-4 col-sm-6">
                     
-                    <div class="thumbnail">
-                            <a href="#myPopup" data-rel="popup" class="ui-btn ui-btn-inline">
+                    <div class="thumbnail" id="fixPlus">
+                            <a href="#myPopupAdd" data-rel="popup" class="ui-btn ui-btn-inline" id="fixPopUpAdd">
                                 <img class="plusBtn" src="/images/greyPlusIcon.png">
                             </a>
-                            <div data-role="popup" id="myPopup" class="ui-content" style="min-width:250px;">
-                                    <form method="post" action="/action_page_post.php">
+                            <div data-role="popup" id="myPopupAdd" class="ui-content" style="min-width:250px;">
+                                    <form method="post" action="/">
                                       <div>
-                                        <h3>Edit</h3>
-                                        <label for="usrnm" class="ui-hidden-accessible">Title</label>
-                                        <input type="text" name="user" id="usrnm" placeholder="Username">
-                                        <label for="pswd" class="ui-hidden-accessible">URL:</label>
-                                        <input type="password" name="passw" id="pswd" placeholder="Password">
-                                        <input type="submit" data-inline="true" value="OK">
-                                        <input type="submit" data-inline="false" value="cancel">
+                                        <h3>Add</h3>
+                                        <label for="usrnm" class="ui-hidden-accessible"></label>
+                                        <input type="text" name="user" id="usrnm" placeholder="Title">
+                                        <label for="pswd" class="ui-hidden-accessible"></label>
+                                        <input type="password" name="passw" id="pswd" placeholder="Img URL">
+                                        <button type="button" class="btn btn-secondary">OK</button>
+                                        <button type="button" class="btn btn-secondary">Cancel</button>
                                       </div>
                                     </form>
                                   </div>

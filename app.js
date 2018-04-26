@@ -46,5 +46,12 @@ app.get('/login/panel-admin/orders', function(req, res){
     res.render('orders');
 });
 
+app.post('/input/', function (req, res){
+    res.render('orders');
+});
+
+
+
+
 
 app.listen(process.env.PORT || 3000);

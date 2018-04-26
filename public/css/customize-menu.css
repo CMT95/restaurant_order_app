@@ -17,7 +17,7 @@ body{
 
 .plusBtn{
     height: 220px;
-    width: 185px;
+    width: 170px;
 }
 
 #h1{
@@ -30,12 +30,40 @@ body{
     height: 100px;
     background-color: lightgray;
     margin-bottom: 20px;
+    font-size: 32px;
 }
 
 .thumbnailHeader{
     font-weight: bold;
+    font-size: 28px;
 }
 
 .fa{
     float: right;
+    margin-right: 4px;
+    margin-left: 2px;
+}
+
+#fixPopUpEdit{
+    border: none;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+
+}
+
+#fixPopUpAdd{
+    border: none;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    height: 182px;
+
+}
+
+
+#fixPlus{
+    text-align: center;
 }
