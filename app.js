@@ -69,7 +69,7 @@ app.get('/login', function (req ,res) {
 // login logic
 // middleware
 app.post('/login',passport.authenticate('local', {
-    successRedirect: '/login/panel-admin',
+    successRedirect: '/panel-admin',
     failureRedirect: '/login'
 }) ,function (req,res) {
 });
@@ -88,17 +88,18 @@ function isLoggedIn(req, res, next) {
     res.redirect('/login');
 }
 
-app.get('/login/panel-admin', function(req, res){
+app.get('/panel-admin', function(req, res){
     res.render('panel-admin');
 });
 
-app.get('/login/panel-admin/customize-menu', function(req, res){
+app.get('/customize-menu', function(req, res){
 
+    
     Category.find(function (err, foundCategories) {
         if (err) {
             res.redirect('/panel-admin');
         } else {
-            res.render('customize-menu', {Categories: foundCategories});
+            res.render('customize-menu', {Categories: foundCategories}); 
         }
     });
     
@@ -114,14 +115,37 @@ app.get('/login/panel-admin/customize-menu', function(req, res){
     // });
 });
 
-app.post
 
-app.get('/panel-admin/orders', function(req, res){
+
+app.get('/orders', function(req, res){
     res.render('orders');
 });
+app.get('/add-category', function (req, res){
+    
+    
+    res.render('add-category')
+    })
 
-app.post('/input/', function (req, res){
-    res.render('orders');
+app.post('/add-category', function (req, res){
+    
+    
+    Category.create(req.body.category, function (err, newCategory) {
+        if (err) {
+            console.log("error")
+            res.render('add-category')
+        } else {
+                res.redirect('/customize-menu')
+           console.log("succes")
+        }
+    })
+
+    
+ 
+
+    
+
+    
+
 });
 
 
