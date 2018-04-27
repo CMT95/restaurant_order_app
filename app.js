@@ -10,11 +10,8 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const User = require('./models/user');
 const Category = require('./models/categories');
 
-//Mongodb
-// const MongoClient = require('mongodb').MongoClient;
-// const ObjectId = require('mongodb').ObjectID;
-const mongodbURL = 'mongodb://admin:admin@ds159489.mlab.com:59489/restaurant_app'
-// mongoose.connect('mongodb://localhost/restaurant_order_app');
+const mongodbURL = 'mongodb://admin:admin@ds159489.mlab.com:59489/restaurant_app';
+
 mongoose.connect(mongodbURL);
 
 app.use(express.static('public'));
@@ -34,7 +31,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.set('view engine', 'ejs');
-
 
 app.get('/', function(req, res){
     res.render('login');
@@ -66,6 +62,7 @@ app.post('/register', function (req,res) {
 app.get('/login', function (req ,res) {
     res.render('login');
 });
+
 // login logic
 // middleware
 app.post('/login',passport.authenticate('local', {
@@ -93,8 +90,6 @@ app.get('/panel-admin', function(req, res){
 });
 
 app.get('/customize-menu', function(req, res){
-
-    
     Category.find(function (err, foundCategories) {
         if (err) {
             res.redirect('/panel-admin');
@@ -102,55 +97,26 @@ app.get('/customize-menu', function(req, res){
             res.render('customize-menu', {Categories: foundCategories}); 
         }
     });
-    
-    // MongoClient.connect(mongodburl, function (err, db) {
-        
-    //     var col = db.collection('Categories');
-    //     // Read All
-    //     col.find().toArray(function (err, result) {
-    //         //console.log(result);
-    //         res.render('customize-menu', {Categories: result});
-    //     });
-    //     db.close();
-    // });
 });
-
-
 
 app.get('/orders', function(req, res){
     res.render('orders');
 });
-app.get('/add-category', function (req, res){
-    
-    
-    res.render('add-category')
-    })
+//NEW ROUTE
+app.get('/category/new', function (req, res){
+    res.render('newCategory')
+})
 
-app.post('/add-category', function (req, res){
-    
-    
+// CREATE ROUTE
+app.post('/category', function (req, res){
     Category.create(req.body.category, function (err, newCategory) {
         if (err) {
-            console.log("error")
-            res.render('add-category')
+            res.render('newCategory')
         } else {
                 res.redirect('/customize-menu')
-           console.log("succes")
         }
     })
-
-    
- 
-
-    
-
-    
-
 });
-
-
-
-
 
 app.listen(process.env.PORT ||'3000', function () {
     console.log('server started...')
