@@ -100,7 +100,7 @@ app.get("/panel-admin", function(req, res) {
 });
 
 app.get("/category", function(req, res) {
-  Category.find(function(err, foundCategories) {
+  Category.find({"shop.id": req.user._id},function(err, foundCategories) {
     if (err) {
       res.redirect("/panel-admin");
     } else {
