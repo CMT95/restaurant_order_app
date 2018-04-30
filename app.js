@@ -89,12 +89,12 @@ app.get('/panel-admin', function(req, res){
     res.render('panel-admin');
 });
 
-app.get('/customize-menu', function(req, res){
+app.get('/category', function(req, res){
     Category.find(function (err, foundCategories) {
         if (err) {
             res.redirect('/panel-admin');
         } else {
-            res.render('customize-menu', {Categories: foundCategories}); 
+            res.render('category', {Categories: foundCategories}); 
         }
     });
 });
@@ -113,7 +113,7 @@ app.post('/category', function (req, res){
         if (err) {
             res.render('newCategory')
         } else {
-                res.redirect('/customize-menu')
+                res.redirect('/category')
         }
     })
 });
