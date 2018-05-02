@@ -1,0 +1,9 @@
+body{
+  background-color: cadetblue;
+  text-align: center
+}
+.contentText{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
