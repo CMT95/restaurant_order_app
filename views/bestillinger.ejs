@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <!-- <meta http-equiv="refresh" content="10"/> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Simple Agile Planning Board</title>
+
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        #board {
+            width: 910px;
+            min-height: 100px;
+
+            position: relative;
+        }
+
+        .title {
+            background-color: #52460a;
+            text-align: center;
+            color: white;
+            padding: 2px 0px;
+        }
+
+        #inprogress {
+            left: 302px;
+        }
+
+        #done {
+            left: 604px;
+        }
+
+        #todo,
+        #inprogress,
+        #done {
+            background-color: tan;
+            position: absolute;
+            width: 300px;
+            min-height: 150px;
+            border: 2px solid black;
+
+        }
+
+        *[draggable=true] {
+            float: left;
+            min-width: 50px;
+            min-height: 50px;
+            border: 2px solid black;
+            margin: 10px;
+            font-weight: bold;
+            min-height: 60px;
+            background-image: -webkit-gradient(linear,
+            left top, left bottom,
+            color-stop(0.63, white),
+            color-stop(0.92, rgb(5, 161, 245)));
+            background-image: -moz-linear-gradient( center top,
+            white 63%,
+            rgb(5, 161, 245) 92%);
+            -webkit-background-size: 1px 8px;
+            -moz-background-size: 1px 8px;
+            background-size: 1px 8px;
+            background-repeat: repeat;
+        }
+
+        .cardTitle {
+            background-color: rgb(255, 255, 255);
+            border: 2px solid white;
+        }
+    </style>
+
+    <body>
+        <div id="board">
+            <div id="todo">
+
+                <div class="title">To Do</div>
+                <% for(var i=0; i<Bestillinger.length; i++){%>
+                    <% if(Bestillinger[i].status == "todo"){ %>
+                    <div id="<%= Bestillinger[i]._id %>" draggable="true">
+                        <div class="cardTitle">
+                            <%= Bestillinger[i].item %>
+                        </div>
+            </div>
+            <%  } %>
+
+            <% } %>
+
+        </div>
+        <div id="inprogress">
+            <div class="title">In Progress</div>
+            <% for(var i=0; i<Bestillinger.length; i++){%>
+                <% if(Bestillinger[i].status == "inprogress"){%>
+                        <div id="<%= Bestillinger[i]._id %>" draggable="true">
+                    <div class="cardTitle">
+                        <%= Bestillinger[i].item %>
+                    </div>
+        </div>
+        <% } %>
+
+        <% } %>
+            </div>
+
+            <div id="done">
+                <div id="title" class="title">Done</div>
+
+                <% for(var i=0; i<Bestillinger.length; i++){%>
+                    <% if(Bestillinger[i].status == "done"){ %>
+                        <div id="<%= Bestillinger[i]._id %>" draggable="true">
+                        <div class="cardTitle">
+                            <%= Bestillinger[i].item %>
+                        </div>
+            </div>
+            <% } %>
+
+            <% } %>
+
+                </div>
+
+
+                <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
+                </script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+                <script type="text/javascript">
+                    $('document').ready(init);
+
+
+                    function init() {
+
+                        var ids = document.querySelectorAll('[id]');
+
+                        Array.prototype.forEach.call(ids, function (el, i) {
+                            // "el" is your element
+                            $('#' + el.id).bind('dragstart', function (event) {
+                                event.originalEvent.dataTransfer.setData("text/plain", event.target.getAttribute('id'));
+                            });
+                        });
+
+
+
+
+
+
+                        // bind the dragover event on the board sections
+                        $('#todo, #inprogress, #done').bind('dragover', function (event) {
+                            event.preventDefault();
+                        });
+
+                        // bind the drop event on the board sections
+                        $('#todo, #inprogress, #done').bind('drop', function (event) {
+                            var notecard = event.originalEvent.dataTransfer.getData("text/plain");
+                            event.target.appendChild(document.getElementById(notecard));
+
+                            // finde hvor den lander
+                            //document.getElementById('title').innerHTML = event.target.getAttribute('id');
+                            // notecard giver item id
+
+
+                            // Turn off the default behaviour
+                            // without this, FF will try and go to a URL with your id's name
+                            event.preventDefault(); 
+
+                            var data = {};
+                            data.title = notecard;
+                            data.message = event.target.getAttribute('id');
+
+                            $.ajax({
+                                type: 'POST',
+                                data: JSON.stringify(data),
+                                contentType: 'application/json',
+                                url: 'http://localhost:3000/zbale',
+                                success: function (data) {
+                                    console.log('success');
+                                    console.log(JSON.stringify(data));
+                                }
+                            });
+
+                        });
+                    }
+                </script>
+
+
+    </body>
+
+</html>
