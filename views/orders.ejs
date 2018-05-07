@@ -1,48 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<link rel="stylesheet" href="/css/footer.css">
-</head>
-<body>
- 
 
-  <div id="footerSlideContainer">
-    <div id="footerSlideButton"><i class="icon-plus-sign icon-3x green"></i> </div>
-    <div id="footerSlideContent">
-      <div id="footerSlideText">
-        <h3>Hey! This system is owned by AlphaServices</h3>
-        <p>Want to know more about this awesome system? </p>
-
-        <p>Want to know more about this awesome system? Contact us at +45 5065 1480</p>
-        <ul>
-          <li></li>
-        </ul>
-        <p></p>
+    <div class="footerBottom">
+    <style>
+      .footerBottom {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: whitesmoke;
+      color: black;
+      text-align: center;
+      font-size: 50px;
+      font-family: 'Times New Roman', Times, serif;
+      font-style: bold;
+      }
+    </style>
+        <p>Copiright AlphaServices</p>
       </div>
     </div>
-    <div class="footerBottom">
-      <p>Copiright AlphaServices</p>
-    </div>
-  </div>
-  
-  <script>	
-  jQuery(function($) {
-		var open = false;
-		$('#footerSlideButton').click(function () {
-			if(open === false) {
-				$('#footerSlideContent').animate({ height: '300px' });
-				$(this).css('backgroundPosition', 'bottom left');
-				open = true;
-			} else {
-				$('#footerSlideContent').animate({ height: '0px' });
-				$(this).css('backgroundPosition', 'top left');
-				open = false;
-			}
-		});		
-	});</script>
-</body>
-</html>
+
