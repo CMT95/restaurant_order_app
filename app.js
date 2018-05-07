@@ -239,7 +239,7 @@ app.get('/menu', function (req, res) {
         }
     }) */
 
-    /* var menuz = {item: "Fiat", description:"done", price:"10", _category:"5ae1b6def36d284005fed981"}
+     var menuz = {item: "jebne mix", description:"done", price:"10", _category:"5ae6de3ebf437913e53abb19"}
 
     Menu.create(menuz, function (err, newCategory) {
         if (err) {
@@ -247,7 +247,7 @@ app.get('/menu', function (req, res) {
         } else {
             res.redirect('/category')
         }
-    }) */
+    }) 
 })
 
 
