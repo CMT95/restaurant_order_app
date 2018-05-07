@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <!-- <meta http-equiv="refresh" content="10"/> -->
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <title>Simple Agile Planning Board</title>
 
@@ -73,57 +74,115 @@
     <body>
         <div id="board">
             <div id="todo">
+
                 <div class="title">To Do</div>
-                <div id="item1" draggable="true">
-                    <div class="cardTitle">
-                        Learn HTML5
-                    </div>
-                </div>
-                <div id="item2" draggable="true">
-                    <div class="cardTitle">
-                        Learn CSS3
-                    </div>
-                </div>
-                <!--<div id="item3" draggable="true">Make an amazing site</div>
-        	<div id="item4" draggable="true">Impress my friends</div>-->
+                <% for(var i=0; i<Bestillinger.length; i++){%>
+                    <% if(Bestillinger[i].status == "todo"){ %>
+                    <div id="<%= Bestillinger[i]._id %>" draggable="true">
+                        <div class="cardTitle">
+                            <%= Bestillinger[i].item %>
+                        </div>
             </div>
-            <div id="inprogress">
-                <div class="title">In Progress</div>
+            <%  } %>
+
+            <% } %>
+
+        </div>
+        <div id="inprogress">
+            <div class="title">In Progress</div>
+            <% for(var i=0; i<Bestillinger.length; i++){%>
+                <% if(Bestillinger[i].status == "inprogress"){%>
+                        <div id="<%= Bestillinger[i]._id %>" draggable="true">
+                    <div class="cardTitle">
+                        <%= Bestillinger[i].item %>
+                    </div>
+        </div>
+        <% } %>
+
+        <% } %>
             </div>
 
             <div id="done">
-                <div class="title">Done</div>
+                <div id="title" class="title">Done</div>
+
+                <% for(var i=0; i<Bestillinger.length; i++){%>
+                    <% if(Bestillinger[i].status == "done"){ %>
+                        <div id="<%= Bestillinger[i]._id %>" draggable="true">
+                        <div class="cardTitle">
+                            <%= Bestillinger[i].item %>
+                        </div>
             </div>
+            <% } %>
 
-        </div>
+            <% } %>
+
+                </div>
 
 
-            <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
-            </script>
+                <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
+                </script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 
-            <script type="text/javascript">
-                $('document').ready(init);
+                <script type="text/javascript">
+                    $('document').ready(init);
 
-                function init() {
-                    $('#item1, #item2').bind('dragstart', function (event) {
-                        event.originalEvent.dataTransfer.setData("text/plain", event.target.getAttribute('id'));
-                    });
 
-                    // bind the dragover event on the board sections
-                    $('#todo, #inprogress, #done').bind('dragover', function (event) {
-                        event.preventDefault();
-                    });
+                    function init() {
 
-                    // bind the drop event on the board sections
-                    $('#todo, #inprogress, #done').bind('drop', function (event) {
-                        var notecard = event.originalEvent.dataTransfer.getData("text/plain");
-                        event.target.appendChild(document.getElementById(notecard));
-                        // Turn off the default behaviour
-                        // without this, FF will try and go to a URL with your id's name
-                        event.preventDefault();
-                    });
-                }
-            </script>
+                        var ids = document.querySelectorAll('[id]');
+
+                        Array.prototype.forEach.call(ids, function (el, i) {
+                            // "el" is your element
+                            $('#' + el.id).bind('dragstart', function (event) {
+                                event.originalEvent.dataTransfer.setData("text/plain", event.target.getAttribute('id'));
+                            });
+                        });
+
+
+
+
+
+
+                        // bind the dragover event on the board sections
+                        $('#todo, #inprogress, #done').bind('dragover', function (event) {
+                            event.preventDefault();
+                        });
+
+                        // bind the drop event on the board sections
+                        $('#todo, #inprogress, #done').bind('drop', function (event) {
+                            var notecard = event.originalEvent.dataTransfer.getData("text/plain");
+                            event.target.appendChild(document.getElementById(notecard));
+
+                            // finde hvor den lander
+                            //document.getElementById('title').innerHTML = event.target.getAttribute('id');
+                            // notecard giver item id
+
+
+                            // Turn off the default behaviour
+                            // without this, FF will try and go to a URL with your id's name
+                            event.preventDefault(); 
+
+                            var data = {};
+                            data.title = notecard;
+                            data.message = event.target.getAttribute('id');
+
+                            $.ajax({
+                                type: 'POST',
+                                data: JSON.stringify(data),
+                                contentType: 'application/json',
+                                url: 'http://localhost:3000/zbale',
+                                success: function (data) {
+                                    console.log('success');
+                                    console.log(JSON.stringify(data));
+                                }
+                            });
+
+                        });
+                    }
+                </script>
+
+
     </body>
 
 </html>

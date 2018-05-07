@@ -7,15 +7,21 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
+
 const User = require('./models/user');
 const Category = require('./models/categories');
+const Menu = require('./models/menu')
+const Bestilling = require('./models/bestillinger');
+
 
 const mongodbURL = 'mongodb://admin:admin@ds159489.mlab.com:59489/restaurant_app';
 
 mongoose.connect(mongodbURL);
 
+
+
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(Cors());
 app.use(require('express-session')({
@@ -32,25 +38,27 @@ passport.deserializeUser(User.deserializeUser());
 
 app.set('view engine', 'ejs');
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     res.render('login');
 });
 
+
+
 // Show sign up form
-app.get('/register', function (req,res) {
+app.get('/register', function (req, res) {
     res.render('register');
 });
 
 // handling user sign up
-app.post('/register', function (req,res) {
+app.post('/register', function (req, res) {
     req.body.username
     req.body.password
-    User.register(new User({username: req.body.username}), req.body.password, function (err, user) {
-        if(err){
+    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
+        if (err) {
             console.log('error: ', req.body);
             return res.render('register');
         }
-        passport.authenticate('local')(req,res, function(){
+        passport.authenticate('local')(req, res, function () {
             res.redirect('/login');
         });
     });
@@ -59,16 +67,16 @@ app.post('/register', function (req,res) {
 // LOGIN ROUTES
 
 // render login form
-app.get('/login', function (req ,res) {
+app.get('/login/', function (req, res) {
     res.render('login');
 });
 
 // login logic
 // middleware
-app.post('/login',passport.authenticate('local', {
+app.post('/login', passport.authenticate('local', {
     successRedirect: '/panel-admin',
     failureRedirect: '/login'
-}) ,function (req,res) {
+}), function (req, res) {
 });
 
 // LOGOUT
@@ -79,49 +87,135 @@ app.get('/logout', function (req, res) {
 
 // MIDDLEWARE
 function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         return next();
     }
     res.redirect('/login');
 }
 
-app.get('/panel-admin', function(req, res){
+app.get('/panel-admin', function (req, res) {
     res.render('panel-admin');
 });
 
-app.get('/category', function(req, res){
+app.get('/category', function (req, res) {
     Category.find(function (err, foundCategories) {
         if (err) {
             res.redirect('/panel-admin');
         } else {
-            res.render('category', {Categories: foundCategories}); 
+
+            res.render('category', { Categories: foundCategories });
         }
     });
+
+    /* app.get("/category", function(req, res) {
+        Category.find({"shop.id": req.user._id},function(err, foundCategories) {
+          if (err) {
+            res.redirect("/panel-admin");
+          } else {
+            res.render("category", { Categories: foundCategories });
+          }
+        });
+      }); */
+
+
 });
 
-app.get('/orders', function(req, res){
+app.get('/chattest', function (req, res) {
+    res.render('chattest');
+});
+
+app.get('/orders', function (req, res) {
     res.render('orders');
 });
 //NEW ROUTE
-app.get('/category/new', function (req, res){
+app.get('/category/new', function (req, res) {
     res.render('newCategory')
 })
 
 // CREATE ROUTE
-app.post('/category', function (req, res){
+app.post('/category', function (req, res) {
     Category.create(req.body.category, function (err, newCategory) {
         if (err) {
             res.render('newCategory')
         } else {
-                res.redirect('/category')
+            res.redirect('/category')
         }
     })
 });
 
-app.get('/bestillinger', function(req, res){
-    res.render('bestillinger');
+app.get('/bestillinger', function (req, res) {
+    /*  var bestiling = {item: "Fiat", status:"done"}
+
+
+    Bestilling.create(bestiling, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    }) */ 
+    
+     Bestilling.find(function (err, foundCategories) {
+        if (err) {
+            res.redirect('/panel-admin');
+        } else {
+
+            res.render('bestillinger', { Bestillinger: foundCategories });
+        }
+    });  
+})
+
+app.get('/menu/:id', function (req, res) {
+    console.log(req.params.id)
+     Menu.find({ "_category": req.params.id }, function (err, foundMenus) {
+        if (err) {
+            res.redirect("/category");
+        } else {
+
+            res.render("menu", { Menus: foundMenus });
+        }
+    }); 
+  
 });
 
-app.listen(process.env.PORT ||'3000', function () {
+
+app.get('/menu', function (req, res) {
+    /* Menu.create(req.body.menu, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    }) */
+
+    /* var menuz = {item: "Fiat", description:"done", price:"10", _category:"5ae1b6def36d284005fed981"}
+
+    Menu.create(menuz, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    }) */
+})
+
+
+app.post('/zbale', function (req, res) {
+    
+    Bestilling.findOneAndUpdate({_id: req.body.title}, {$set:{status:req.body.message}}, {new: true}, function(err, doc){
+        if(err){
+            console.log("Something wrong when updating data!");
+        }
+    
+        console.log(doc);
+    });
+
+    console.log(req.body.title)
+    console.log(req.body.message)
+
+})
+
+
+app.listen(process.env.PORT || '3000', function () {
     console.log('server started...')
 })
