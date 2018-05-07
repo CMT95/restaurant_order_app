@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <head>
-  <title>Dashboard</title>
+  <title>Menu</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
+  crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/category.css">
 </head>
@@ -16,12 +16,14 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/panel-admin">Dashboard</a></li>
-                    
+                    <li><a href="/login">Sign in</a></li>
+                    <li><a href="/register">Sign up</a></li>
+                    <li><a href="/logout">Sign out</a></li>
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> 
+  </div>
   <div class="container">
     <div class="jumbotron">
       <h1>
@@ -29,30 +31,35 @@
         Menu</h1>
     </div>
     <div class="row">
-            <% for(var i=0; i<Categories.length; i++){%>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="thumbnail">
-                        <div>
-                            <span class="thumbnailHeader">
-                                <%= Categories[i].title %>
-                            </span>
-                            <i style="font-size:36px" class="fa">&#xf00d;</i>
-                            <i class="fa fa-edit" style="font-size:38px"></i>
-                        </div>
+        <% for(var i=0; i<Categories.length; i++){%>
+            <div class="col-lg-4 col-sm-6">
+                <div class="thumbnail">
+                    <div class="categoryHeader">
+                        <span class="thumbnailHeader">
+                            <%= Categories[i].title %>
+                        </span>
+                        <!-- <form action="/category/<%= Categories._id %>?_method=DELETE" method="POST"> -->
+                            <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        <!-- </form> -->
+                        <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                    </div>
+                    <a href="/category/<%= Categories._id%>">
                         <img src="<%= Categories[i].image %>">
+                    </a>
+                </div>
+            </div>
+            <% } %>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="thumbnail" id="fixPlus">
+                        <a href="/category/new" class="ui-btn ui-btn-inline" id="fixPopUpAdd">
+                            <img class="plusBtn" src="/images/greyPlusIcon.png">
+                        </a>
                     </div>
                 </div>
-                <% } %>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="thumbnail" id="fixPlus">
-                            <a href="/category/new" class="ui-btn ui-btn-inline" id="fixPopUpAdd">
-                                <img class="plusBtn" src="/images/greyPlusIcon.png">
-                            </a>
-                        </div>
-                    </div>
-        </div>
-
+    </div>
   </div>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

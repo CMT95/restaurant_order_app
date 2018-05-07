@@ -9,6 +9,7 @@ const LocalStrategy = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose");
 const User = require("./models/user");
 const Category = require("./models/categories");
+const Menu = require("./models/menu");
 
 const mongodbURL =
   "mongodb://admin:admin@ds159489.mlab.com:59489/restaurant_app";
@@ -114,22 +115,12 @@ app.get("/category/new", function(req, res) {
 });
 
 app.get("/category", function(req, res) {
-  Category.find({ "shop.id": req.user._id }, function(err, foundCategories) {
+  Category.find({"shop.id": req.user._id }, function(err, foundCategories) {
     if (err) {
       res.redirect("/panel-admin");
     } else {
       res.render("category", { Categories: foundCategories });
     }
-  });
-});
-
-app.get("/category/:id", function (req,res) {
-  Blog.findById(req.params.id, function (err, foundMenu) {
-      if (err) {
-          res.redirect("/category");
-      } else {
-          res.render("/menu", {Menu: foundMenu});
-      }
   });
 });
 
@@ -142,13 +133,77 @@ app.post("/category", function(req, res) {
     username: req.user.username
   };
   var newCategory = { title: title, image: image, shop: shop };
-  Category.create(newCategory, function(err, newlyCreated) {
+  Category.create(newCategory, req.params.id, function(err, newlyCreated) {
     console.log(newCategory);
     if (err) {
       console.log("Try again")
       res.render("newCategory");
     } else {
       res.redirect("/category");
+    }
+  });
+});
+
+
+// //  VIRKER IKKE SHOW ROUTE
+// app.get("/category/:id", function (req,res) {
+//   Category.find(req.params.id, function (err, foundCategory) {
+//       if (err) {
+//           console.log(err)
+//       } else {
+//           console.log("success")
+//           res.redirect("/menu");
+//       }
+//   });
+// });
+
+// VIRKER IKKE
+// app.delete("/category/:id", function (req ,res) {
+//   Category.findByIdAndRemove(req.params.id, function (err) {
+//       if(err){
+//           res.redirect("/category");
+//       }else{
+//           res.redirect("/category")
+//       }
+//   })
+// });
+
+// =====================
+// MENU
+// =====================
+
+//NEW ROUTE
+app.get("/menu/new", function(req, res) {
+  res.render("newMenu");
+});
+
+app.get("/menu", function(req, res) {
+  Menu.find(function(err, foundMenus) {
+    if (err) {
+      res.redirect("/category");
+    } else {
+      res.render("menu", { Menu: foundMenus });
+    }
+  });
+});
+
+// CREATE ROUTE
+app.post("/menu", function(req, res) {
+  var item = req.body.menu.item;
+  var description = req.body.menu.description;
+  var price = req.body.menu.price;
+  var category = {
+    id: req.params.id,
+    title: req.params.title
+  };
+  var newMenu = { item: item, description: description, price: price, category: category };
+  Menu.create(newMenu, function(err, newlyCreated) {
+    console.log(newMenu);
+    if (err) {
+      console.log("Try again")
+      res.render("newMenu");
+    } else {
+      res.redirect("/menu");
     }
   });
 });
