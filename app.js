@@ -1,25 +1,27 @@
 //Express
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
-const Cors = require("cors"); //test
-const mongoose = require("mongoose");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const passportLocalMongoose = require("passport-local-mongoose");
-const User = require("./models/user");
-const Category = require("./models/categories");
-const Menu = require("./models/menu");
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const passportLocalMongoose = require('passport-local-mongoose');
 
-const mongodbURL =
-  "mongodb://admin:admin@ds159489.mlab.com:59489/restaurant_app";
+const User = require('./models/user');
+const Category = require('./models/categories');
+const Menu = require('./models/menu')
+const Bestilling = require('./models/bestillinger');
+
+
+const mongodbURL = 'mongodb://admin:admin@ds159489.mlab.com:59489/restaurant_app';
 
 mongoose.connect(mongodbURL);
 
-app.use(express.static("public"));
+
+
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(Cors());
 app.use(
   require("express-session")({
     secret: "authentication demo app",
@@ -39,6 +41,8 @@ app.set("view engine", "ejs");
 app.get("/", function(req, res) {
   res.render("index");
 });
+
+
 
 // Show sign up form
 app.get("/register", function(req, res) {
@@ -101,10 +105,6 @@ app.get("/logout", function(req, res) {
 app.get("/panel-admin", function(req, res) {
   res.render("panel-admin");
 });
-app.get("/orders", function(req, res) {
-  res.render("orders");
-});
-
 // =====================
 // CATEGORY
 // =====================
@@ -173,41 +173,129 @@ app.post("/category", function(req, res) {
 // =====================
 
 //NEW ROUTE
-app.get("/menu/new", function(req, res) {
-  res.render("newMenu");
-});
-
-app.get("/menu", function(req, res) {
-  Menu.find(function(err, foundMenus) {
-    if (err) {
-      res.redirect("/category");
-    } else {
-      res.render("menu", { Menu: foundMenus });
-    }
-  });
-});
+app.get('/category/new', function (req, res) {
+    res.render('newCategory')
+})
 
 // CREATE ROUTE
-app.post("/menu", function(req, res) {
-  var item = req.body.menu.item;
-  var description = req.body.menu.description;
-  var price = req.body.menu.price;
-  var category = {
-    id: req.params.id,
-    title: req.params.title
-  };
-  var newMenu = { item: item, description: description, price: price, category: category };
-  Menu.create(newMenu, function(err, newlyCreated) {
-    console.log(newMenu);
-    if (err) {
-      console.log("Try again")
-      res.render("newMenu");
-    } else {
-      res.redirect("/menu");
-    }
-  });
+app.post('/category', function (req, res) {
+    Category.create(req.body.category, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    })
 });
 
-app.listen(process.env.PORT || "3000", function() {
-  console.log("server started...");
+app.get('/orders', function (req, res) {
+    /*  var bestiling = {item: "Fiat", status:"done"}
+
+
+    Bestilling.create(bestiling, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    }) */ 
+    
+     Bestilling.find(function (err, foundCategories) {
+        if (err) {
+            res.redirect('/panel-admin');
+        } else {
+
+            res.render('bestillinger', { Bestillinger: foundCategories });
+        }
+    });  
+})
+
+app.get('/menu/:id', function (req, res) {
+    console.log(req.params.id)
+     Menu.find({ "_category": req.params.id }, function (err, foundMenus) {
+        if (err) {
+            res.redirect("/category");
+        } else {
+
+            res.render("menu", { Menus: foundMenus });
+        }
+    }); 
+  
 });
+
+
+app.get('/menu', function (req, res) {
+    /* Menu.create(req.body.menu, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    }) */
+
+     /* var menuz = {item: "jebne mix", description:"done", price:"10", _category:"5ae6de3ebf437913e53abb19"}
+
+    Menu.create(menuz, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    })  */
+})
+
+app.post('/bestil', function(req, res){
+    var bestiling = {item: "Fiat", status:"done"}    
+
+    Bestilling.create(bestiling, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    })
+})
+
+
+app.post('/zbale', function (req, res) {
+    
+    Bestilling.findOneAndUpdate({_id: req.body.title}, {$set:{status:req.body.message}}, {new: true}, function(err, doc){
+        if(err){
+            console.log("Something wrong when updating data!");
+        }
+    
+        console.log(doc);
+    });
+
+    console.log(req.body.title)
+    console.log(req.body.message)
+
+})
+
+app.post('/zbale1', function (req, res) {
+    var zbale = "";
+    req.body.forEach(function (item) {//got an exception 
+        console.log(item.item);
+        zbale = zbale + item.item+ " "
+        zbale = zbale + item.amount+ ", "
+
+    });
+   // console.log(req.body[0].item)
+   // console.log(req.body[0].amount)
+   console.log(zbale)
+   
+    var bestiling = {item: zbale, status:"todo"}
+    Bestilling.create(bestiling, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    })
+
+})
+
+
+app.listen(process.env.PORT || '3000', function () {
+    console.log('server started...')
+})

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // MONGOOSE/MODEL CONFIG
-var categorySchema = new mongoose.Schema({
+var categoriesSchema = new mongoose.Schema({
     title: String,
     image: String,
     shop: {
@@ -14,4 +14,4 @@ var categorySchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('categories', categorySchema);
+module.exports = mongoose.model('categories', categoriesSchema);

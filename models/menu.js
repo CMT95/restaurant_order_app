@@ -1,18 +1,17 @@
 var mongoose = require('mongoose');
 
 // MONGOOSE/MODEL CONFIG
-var menuSchema = new mongoose.Schema({
+var MenuSchema = new mongoose.Schema({
     item: String,
     description: String,
     price: String,
-    category: {
-        id: {
+    
+    _category: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Category"
-        },
-        title: String
-    }
-
+            ref: "categories"
+        }
+        
+    
 });
 
-module.exports = mongoose.model('menu', menuSchema);
+module.exports = mongoose.model('menu', MenuSchema);
