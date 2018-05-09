@@ -295,6 +295,10 @@ app.post('/zbale1', function (req, res) {
 
 })
 
+app.get('/test', function(req, res){
+    res.render('test')
+})
+
 
 app.listen(process.env.PORT || '3000', function () {
     console.log('server started...')
