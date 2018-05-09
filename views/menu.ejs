@@ -1,94 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Menu</title>
-    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/menu.css">
 </head>
 
-<body>
-         
-                
-
-                
-        
-         
-            <% for(var i=0; i<Menus.length; i++){%>
-         <div class="form-group">
-            <label>Quantity: </label>
-            <div class="input-group">
-                    <%= Menus[i].item %>
-                <div class="input-group-btn">
-                    <button  class="btn btn-default" onclick=" down('0', '<%= Menus[i].item %>')"><span class="glyphicon glyphicon-minus"></span></button>
-                </div>
-                <input type="text" id="<%= Menus[i].item %>" class="form-control input-number" value="0" />
-                
-                <div class="input-group-btn">
-                    <button  class="btn btn-default" onclick="up('10', '<%= Menus[i].item %>')"><span class="glyphicon glyphicon-plus"></span></button>
-                </div>
+<body class="text-center">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Restaurant Order App</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/login">Sign in</a>
+                    </li>
+                    <li>
+                        <a href="/register">Sign up</a>
+                    </li>
+                    <li>
+                        <a href="/logout">Sign out</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        
-       
-        <% } %>
-        <button class="btn btn-default" onclick="send()"><span class="glyphicon glyphicon-minus"></span>order</button> 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
-        
-     <script>
-function up(max, name) {
-    document.getElementById(name).value = parseInt(document.getElementById(name).value) + 1;
-    if (document.getElementById(name).value >= parseInt(max)) {
-        document.getElementById(name).value = max;
-    }
-}
-function down(min, name) {
-    document.getElementById(name).value = parseInt(document.getElementById(name).value) - 1;
-    if (document.getElementById(name).value <= parseInt(min)) {
-        document.getElementById(name).value = min;
-    }
-}
+    </nav>
+    </div>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>
+                <i class="fas fa-clipboard" aria-hidden="true"></i>
+                Menu</h1>
+        </div>
+        <div class="row">
+            <% for(var i=0; i<Menus.length; i++){%>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="thumbnail">
+                        <div class="categoryHeader">
+                            <span class="thumbnailHeader">
+                                <%= Menus[i].item %>
+                            </span>
+                        </div>
+                      
+                        <label>Quantity: </label>
+
+                        <button class="btn btn-default btn-sm" onclick=" down('0', '<%= Menus[i].item %>')">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+
+                        <input class="inputSize" type="text" id="<%= Menus[i].item %>" value="0" />
+                        <button class="btn btn-default btn-sm" onclick="up('10', '<%= Menus[i].item %>')">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+           
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-sm-6">
+                <div class="form-group">
+                    <label>Quantity: </label>
+                    <div class="input-group">
+                        <%= Menus[i].item %>
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" onclick=" down('0', '<%= Menus[i].item %>')">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </div>
+                            <input type="text" id="<%= Menus[i].item %>" class="form-control input-number" value="0" />
+
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" onclick="up('10', '<%= Menus[i].item %>')">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </div>
+                    </div>
+                </div>
+            </div> -->
+
+                <% } %>
+
+        </div>
+    </div>
+
+    <button class="btn btn-success btn-lg" onclick="send()">
+        <i class="fas fa-shopping-cart"></i> Order now!
+    </button>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+    <script>
+        function up(max, name) {
+            document.getElementById(name).value = parseInt(document.getElementById(name).value) + 1;
+            if (document.getElementById(name).value >= parseInt(max)) {
+                document.getElementById(name).value = max;
+            }
+        }
+        function down(min, name) {
+            document.getElementById(name).value = parseInt(document.getElementById(name).value) - 1;
+            if (document.getElementById(name).value <= parseInt(min)) {
+                document.getElementById(name).value = min;
+            }
+        }
 
 
-function send(){
+        function send() {
 
- var ids = document.querySelectorAll('[id]');
- var data = [];
- 
-                Array.prototype.forEach.call(ids, function (el, i) {
-                            // "el" is your element
-                            tempdata = {};
-                            if(document.getElementById(el.id).value != "0"){
-                              tempdata.item = el.id;
-                              tempdata.amount = document.getElementById(el.id).value;
-                              data.push(tempdata)
-                            
-                            }
+            var ids = document.querySelectorAll('[id]');
+            var data = [];
 
-                        });
-                            
-                            
+            Array.prototype.forEach.call(ids, function (el, i) {
+                // "el" is your element
+                tempdata = {};
+                if (document.getElementById(el.id).value != "0") {
+                    tempdata.item = el.id;
+                    tempdata.amount = document.getElementById(el.id).value;
+                    data.push(tempdata)
 
-                            $.ajax({
-                                type: 'POST',
-                                data: JSON.stringify(data),
-                                contentType: 'application/json',
-                                url: 'http://localhost:3000/zbale1',
-                                success: function (data) {
-                                    console.log('success');
-                                    console.log(JSON.stringify(data));
-                                }
-                            });
-    }
-    
+                }
+
+            });
 
 
 
-
-</script>          
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:3000/zbale1',
+                success: function (data) {
+                    console.log('success');
+                    console.log(JSON.stringify(data));
+                }
+            });
+        }
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
