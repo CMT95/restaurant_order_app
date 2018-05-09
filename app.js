@@ -105,10 +105,6 @@ app.get("/logout", function(req, res) {
 app.get("/panel-admin", function(req, res) {
   res.render("panel-admin");
 });
-app.get("/orders", function(req, res) {
-  res.render("orders");
-});
-
 // =====================
 // CATEGORY
 // =====================
@@ -192,7 +188,7 @@ app.post('/category', function (req, res) {
     })
 });
 
-app.get('/bestillinger', function (req, res) {
+app.get('/orders', function (req, res) {
     /*  var bestiling = {item: "Fiat", status:"done"}
 
 
