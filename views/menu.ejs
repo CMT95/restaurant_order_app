@@ -5,15 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Menu</title>
+    
 </head>
+
 <body>
-         <% for(var i=0; i<Menus.length; i++){%>
-                <%= Menus[i].item %>
+         
+                
 
                 
-         <% } %> 
-
         
-               
+         
+            <% for(var i=0; i<Menus.length; i++){%>
+         <div class="form-group">
+            <label>Quantity: </label>
+            <div class="input-group">
+                    <%= Menus[i].item %>
+                <div class="input-group-btn">
+                    <button  class="btn btn-default" onclick=" down('0', '<%= Menus[i].item %>')"><span class="glyphicon glyphicon-minus"></span></button>
+                </div>
+                <input type="text" id="<%= Menus[i].item %>" class="form-control input-number" value="0" />
+                
+                <div class="input-group-btn">
+                    <button  class="btn btn-default" onclick="up('10', '<%= Menus[i].item %>')"><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+            </div>
+        </div>
+        
+       
+        <% } %>
+        <button class="btn btn-default" onclick="send()"><span class="glyphicon glyphicon-minus"></span>order</button> 
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+        
+     <script>
+function up(max, name) {
+    document.getElementById(name).value = parseInt(document.getElementById(name).value) + 1;
+    if (document.getElementById(name).value >= parseInt(max)) {
+        document.getElementById(name).value = max;
+    }
+}
+function down(min, name) {
+    document.getElementById(name).value = parseInt(document.getElementById(name).value) - 1;
+    if (document.getElementById(name).value <= parseInt(min)) {
+        document.getElementById(name).value = min;
+    }
+}
+
+
+function send(){
+
+ var ids = document.querySelectorAll('[id]');
+ var data = [];
+ 
+                Array.prototype.forEach.call(ids, function (el, i) {
+                            // "el" is your element
+                            tempdata = {};
+                            if(document.getElementById(el.id).value != "0"){
+                              tempdata.item = el.id;
+                              tempdata.amount = document.getElementById(el.id).value;
+                              data.push(tempdata)
+                            
+                            }
+
+                        });
+                            
+                            
+
+                            $.ajax({
+                                type: 'POST',
+                                data: JSON.stringify(data),
+                                contentType: 'application/json',
+                                url: 'http://localhost:3000/zbale1',
+                                success: function (data) {
+                                    console.log('success');
+                                    console.log(JSON.stringify(data));
+                                }
+                            });
+    }
+    
+
+
+
+
+</script>          
 </body>
 </html>

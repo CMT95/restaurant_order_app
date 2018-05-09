@@ -239,7 +239,7 @@ app.get('/menu', function (req, res) {
         }
     }) */
 
-     var menuz = {item: "jebne mix", description:"done", price:"10", _category:"5ae6de3ebf437913e53abb19"}
+     /* var menuz = {item: "jebne mix", description:"done", price:"10", _category:"5ae6de3ebf437913e53abb19"}
 
     Menu.create(menuz, function (err, newCategory) {
         if (err) {
@@ -247,7 +247,19 @@ app.get('/menu', function (req, res) {
         } else {
             res.redirect('/category')
         }
-    }) 
+    })  */
+})
+
+app.post('/bestil', function(req, res){
+    var bestiling = {item: "Fiat", status:"done"}    
+
+    Bestilling.create(bestiling, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    })
 })
 
 
@@ -263,6 +275,29 @@ app.post('/zbale', function (req, res) {
 
     console.log(req.body.title)
     console.log(req.body.message)
+
+})
+
+app.post('/zbale1', function (req, res) {
+    var zbale = "";
+    req.body.forEach(function (item) {//got an exception 
+        console.log(item.item);
+        zbale = zbale + item.item+ " "
+        zbale = zbale + item.amount+ ", "
+
+    });
+   // console.log(req.body[0].item)
+   // console.log(req.body[0].amount)
+   console.log(zbale)
+   
+    var bestiling = {item: zbale, status:"todo"}
+    Bestilling.create(bestiling, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/category')
+        }
+    })
 
 })
 
