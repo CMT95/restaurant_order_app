@@ -13,11 +13,9 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.0"
   },
-  "engines": {
-    "node": "8.9.4"
-  },
   "devDependencies": {},
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +27,8 @@
   "bugs": {
     "url": "https://github.com/CMT95/restaurant_order_app/issues"
   },
+  "engines": {
+    "node": "8.9.4"
+  },
   "homepage": "https://github.com/CMT95/restaurant_order_app#readme"
-  
 }
