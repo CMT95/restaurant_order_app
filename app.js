@@ -2,7 +2,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
-const Cors = require('cors'); //test
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -23,7 +22,6 @@ mongoose.connect(mongodbURL);
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(Cors());
 app.use(
   require("express-session")({
     secret: "authentication demo app",
