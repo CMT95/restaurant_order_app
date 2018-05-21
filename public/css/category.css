@@ -60,7 +60,7 @@
 #fixPopUpAdd{
     border: none;
     background-color: white;
-    margin: 0;
+    margin: 20px;
     padding: 0;
     box-shadow: none;
     height: 182px;
@@ -70,10 +70,21 @@
 
 #fixPlus{
     text-align: center;
+    
 }
 
 .categoryHeader{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.container{
+    height: 1400px;
+}
+
+.thumbnail a>img, .thumbnail>img {
+    margin-right: auto;
+    margin-left: auto;
+    height: 263px;
 }
