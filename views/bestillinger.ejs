@@ -22,7 +22,7 @@
         <div id="board">
             <div id="todo">
 
-                <div class="title">To Do</div>
+                <div class="title">Afventer</div>
                 <% for(var i=0; i<Bestillinger.length; i++){%>
                     <% if(Bestillinger[i].status == "todo"){ %>
                     <div id="<%= Bestillinger[i]._id %>" draggable="true">
@@ -36,7 +36,7 @@
 
         </div>
         <div id="inprogress">
-            <div class="title">In Progress</div>
+            <div class="title">I gang</div>
             <% for(var i=0; i<Bestillinger.length; i++){%>
                 <% if(Bestillinger[i].status == "inprogress"){%>
                         <div id="<%= Bestillinger[i]._id %>" draggable="true">
@@ -50,7 +50,7 @@
             </div>
 
             <div id="done">
-                <div id="title" class="title">Done</div>
+                <div id="title" class="title">Færdig</div>
 
                 <% for(var i=0; i<Bestillinger.length; i++){%>
                     <% if(Bestillinger[i].status == "done"){ %>
