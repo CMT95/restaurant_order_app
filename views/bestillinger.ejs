@@ -3,75 +3,22 @@
 
 <head>
     <!-- <meta http-equiv="refresh" content="10"/> -->
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <title>Simple Agile Planning Board</title>
-
-    <style>
-        body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-
-        #board {
-            width: 910px;
-            min-height: 100px;
-
-            position: relative;
-        }
-
-        .title {
-            background-color: #52460a;
-            text-align: center;
-            color: white;
-            padding: 2px 0px;
-        }
-
-        #inprogress {
-            left: 302px;
-        }
-
-        #done {
-            left: 604px;
-        }
-
-        #todo,
-        #inprogress,
-        #done {
-            background-color: tan;
-            position: absolute;
-            width: 300px;
-            min-height: 150px;
-            border: 2px solid black;
-
-        }
-
-        *[draggable=true] {
-            float: left;
-            min-width: 50px;
-            min-height: 50px;
-            border: 2px solid black;
-            margin: 10px;
-            font-weight: bold;
-            min-height: 60px;
-            background-image: -webkit-gradient(linear,
-            left top, left bottom,
-            color-stop(0.63, white),
-            color-stop(0.92, rgb(5, 161, 245)));
-            background-image: -moz-linear-gradient( center top,
-            white 63%,
-            rgb(5, 161, 245) 92%);
-            -webkit-background-size: 1px 8px;
-            -moz-background-size: 1px 8px;
-            background-size: 1px 8px;
-            background-repeat: repeat;
-        }
-
-        .cardTitle {
-            background-color: rgb(255, 255, 255);
-            border: 2px solid white;
-        }
-    </style>
+    <title>Orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bestillinger.css">
+</head>
 
     <body>
+            <!-- <% include header.ejs %> -->
+            <div class="container">
+                    <div class="jumbotron">
+                      <h1>
+                        <i class="fas fa-columns" aria-hidden="true"></i>
+                        Orders</h1>
+                    </div>
+                    <div class="fixCenter">
         <div id="board">
             <div id="todo">
 
@@ -117,12 +64,17 @@
             <% } %>
 
                 </div>
+            </div>
+            </div>
+
 
 
                 <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
                 </script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
                 <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+                <script src="jquery.ui.touch-punch.min.js"></script>
 
                 <script type="text/javascript">
                     $('document').ready(init);
@@ -137,6 +89,7 @@
                             $('#' + el.id).bind('dragstart', function (event) {
                                 event.originalEvent.dataTransfer.setData("text/plain", event.target.getAttribute('id'));
                             });
+                            
                         });
 
 
@@ -182,7 +135,7 @@
                     }
                 </script>
 
-
+    <% include footer.ejs %>
     </body>
 
 </html>
