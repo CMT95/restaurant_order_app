@@ -79,6 +79,9 @@
 
                 <% } %>
 
+                <a href="/newMenu/<%= IDs %>">Create new item in Menu</a>
+
+                
         </div>
     </div>
 
@@ -120,7 +123,7 @@
 
             });
 
-
+            alert('You order has been placed');
 
             $.ajax({
                 type: 'POST',
@@ -131,7 +134,9 @@
                     console.log('success');
                     console.log(JSON.stringify(data));
                 }
+            
             });
+
         }
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"

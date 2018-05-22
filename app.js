@@ -234,7 +234,7 @@ app.get('/menu/:id', function (req, res) {
                 res.redirect("/category");
             } else {
     
-                res.render("menu", { Menus: foundMenus });
+                res.render("menu", { Menus: foundMenus, IDs: req.params.id });
             }
         }); 
     }else{
@@ -243,7 +243,7 @@ app.get('/menu/:id', function (req, res) {
                 res.redirect("/category");
             } else {
     
-                res.render("menu", { Menus: foundMenus });
+                res.render("menu", { Menus: foundMenus, IDs: req.params.id });
             }
         }); 
     }
@@ -322,6 +322,21 @@ app.post('/zbale1', function (req, res) {
     })
 
 })
+
+app.get('/newMenu/:id', function(req, res){
+    res.render('newMenu', {IDs : req.params.id})
+})
+
+app.post('/menu', function(req,res){
+    Menu.create(req.body.menu, function (err, newCategory) {
+        if (err) {
+            res.render('newCategory')
+        } else {
+            res.redirect('/menu/'+req.body.menu._category)
+        }
+    })
+})
+
 
 app.listen(process.env.PORT || '3000', function () {
     console.log('server started...')
