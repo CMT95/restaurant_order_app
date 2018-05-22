@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Categories</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/category.css">
+</head>
+
+<body class="text-center">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Restaurant Order App</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/panel-admin">Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav> 
+  </div>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>
+        <i class="fas fa-clipboard" aria-hidden="true"></i>
+        Categories</h1>
+    </div>
+    <div class="row">
+        <% for(var i=0; i<Categories.length; i++){%>
+            <div class="col-lg-4 col-sm-6">
+                <div class="thumbnail">
+                    <div class="categoryHeader">
+                        <span class="thumbnailHeader">
+                            <%= Categories[i].title %>
+                        </span>
+                        <!-- <form action="/category/<%= Categories._id %>?_method=DELETE" method="POST"> -->
+                            <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        <!-- </form> -->
+                        <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                    </div>
+                    <a href="/menu/<%= Categories[i]._id%>">
+                        <img src="<%= Categories[i].image %>">
+                    </a>
+                </div>
+            </div>
+            <% } %>
+    </div>
+  </div>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+    <% include footer.ejs %>
+</body>
+
+</html>

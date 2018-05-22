@@ -103,7 +103,12 @@ app.get("/logout", function(req, res) {
 });
 
 app.get("/panel-admin", function(req, res) {
-  res.render("panel-admin");
+    if(req.user.username.includes('bord') !== true){
+        return res.render("panel-admin")
+    }else{
+        res.render("panel-user");
+    }
+  
 });
 // =====================
 // CATEGORY
@@ -115,13 +120,24 @@ app.get("/category/new", function(req, res) {
 });
 
 app.get("/category", function(req, res) {
-  Category.find({"shop.id": req.user._id }, function(err, foundCategories) {
-    if (err) {
-      res.redirect("/panel-admin");
-    } else {
-      res.render("category", { Categories: foundCategories });
+    if(req.user.username.includes('bord') !== true){
+        Category.find({"shop.id": req.user._id }, function(err, foundCategories) {
+            if (err) {
+              res.redirect("/panel-admin");
+            } else {
+              res.render("category", { Categories: foundCategories });
+            }
+          });
+    }else{
+        Category.find({"shop.id": req.user._id }, function(err, foundCategories) {
+            if (err) {
+              res.redirect("/login");
+            } else {
+              res.render("userCategory", { Categories: foundCategories });
+            }
+          });
     }
-  });
+  
 });
 
 // CREATE ROUTE
@@ -212,14 +228,26 @@ app.get('/orders', function (req, res) {
 
 app.get('/menu/:id', function (req, res) {
     console.log(req.params.id)
-     Menu.find({ "_category": req.params.id }, function (err, foundMenus) {
-        if (err) {
-            res.redirect("/category");
-        } else {
-
-            res.render("menu", { Menus: foundMenus });
-        }
-    }); 
+     if(req.user.username.includes('bord') !== true){
+        Menu.find({ "_category": req.params.id }, function (err, foundMenus) {
+            if (err) {
+                res.redirect("/category");
+            } else {
+    
+                res.render("menu", { Menus: foundMenus });
+            }
+        }); 
+    }else{
+        Menu.find({ "_category": req.params.id }, function (err, foundMenus) {
+            if (err) {
+                res.redirect("/category");
+            } else {
+    
+                res.render("menu", { Menus: foundMenus });
+            }
+        }); 
+    }
+     
   
 });
 
