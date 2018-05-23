@@ -243,7 +243,7 @@ app.get('/menu/:id', function (req, res) {
                 res.redirect("/category");
             } else {
     
-                res.render("menu", { Menus: foundMenus, IDs: req.params.id });
+                res.render("userMenu", { Menus: foundMenus, IDs: req.params.id });
             }
         }); 
     }
