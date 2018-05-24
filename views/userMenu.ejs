@@ -41,8 +41,12 @@
                             </span>
                         </div>
                         <div>
-                        <label>Price: </label>
-                        <%= Menus[i].price %>
+                            <label>Price: </label>
+                            <%= Menus[i].price %>
+                        </div>
+                        <div>
+                            <label>Description: </label>
+                            <%= Menus[i].description %>
                         </div>
                         <label>Quantity: </label>
 
@@ -78,7 +82,7 @@
             </div> -->
 
                 <% } %>
-                <a href="/newMenu/<%= IDs %>">Create new item in Menu</a>
+                    <a href="/newMenu/<%= IDs %>">Create new item in Menu</a>
 
         </div>
     </div>
