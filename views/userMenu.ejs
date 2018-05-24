@@ -83,9 +83,11 @@
         </div>
     </div>
 
-    <button class="btn btn-success btn-lg" onclick="send()">
-        <i class="fas fa-shopping-cart"></i> Order now!
-    </button>
+    <a href="/category">
+        <button class="btn btn-success btn-lg" onclick="send()">
+            <i class="fas fa-shopping-cart"></i> Order now!
+        </button>
+    </a>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -123,7 +125,7 @@
 
             });
 
-
+            alert('You order has been placed');
 
             $.ajax({
                 type: 'POST',
