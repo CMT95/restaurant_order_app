@@ -312,7 +312,11 @@ app.post('/zbale1', function (req, res) {
    // console.log(req.body[0].amount)
    console.log(zbale)
    
-    var bestiling = {item: zbale, status:"todo"}
+    var bord = req.user.username
+    
+    console.log(bord) 
+    var bestiling = {item: zbale, status:"todo", table: bord}
+    
     Bestilling.create(bestiling, function (err, newCategory) {
         if (err) {
             res.render('newCategory')
