@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bestillingSchema = new mongoose.Schema({
     item: String,
     status: String,
+    table: String
 });
 
 module.exports = mongoose.model('bestillinger', bestillingSchema);

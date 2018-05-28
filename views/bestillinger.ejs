@@ -38,7 +38,9 @@
                     <% if(Bestillinger[i].status == "todo"){ %>
                     <div id="<%= Bestillinger[i]._id %>" draggable="true">
                         <div class="cardTitle">
+                            <%= Bestillinger[i].table %>
                             <%= Bestillinger[i].item %>
+                            
                         </div>
             </div>
             <%  } %>
@@ -52,6 +54,7 @@
                 <% if(Bestillinger[i].status == "inprogress"){%>
                         <div id="<%= Bestillinger[i]._id %>" draggable="true">
                     <div class="cardTitle">
+                            <%= Bestillinger[i].table %>
                         <%= Bestillinger[i].item %>
                     </div>
         </div>
@@ -67,8 +70,9 @@
                     <% if(Bestillinger[i].status == "done"){ %>
                         <div id="<%= Bestillinger[i]._id %>" draggable="true">
                         <div class="cardTitle">
-                            <%= Bestillinger[i].item %>
-                            hej
+                               <div> <%= Bestillinger[i].table  %></div>
+                            <div><%= Bestillinger[i].item %></div>
+                            
                         </div>
             </div>
             <% } %>
