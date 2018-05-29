@@ -29,7 +29,7 @@
         <div class="jumbotron">
             <h1>
                 <a href="/category">
-                <i class="fas fa-arrow-left" id="backBottom"></i>
+                <i class="fas fa-arrow-left" id="backButton"></i>
                 </a>
                 <i class="fas fa-clipboard" aria-hidden="true"></i>
                 Menu</h1>
@@ -123,11 +123,15 @@
             Array.prototype.forEach.call(ids, function (el, i) {
                 // "el" is your element
                 tempdata = {};
+                if(el.id != "backButton"){
+
+                
                 if (document.getElementById(el.id).value != "0") {
                     tempdata.item = el.id;
                     tempdata.amount = document.getElementById(el.id).value;
                     data.push(tempdata)
 
+                }
                 }
 
             });
