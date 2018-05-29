@@ -102,7 +102,7 @@ app.get("/logout", function(req, res) {
   res.redirect("/login");
 });
 
-app.get("/panel-admin", function(req, res) {
+app.get("/panel-admin",isLoggedIn, function(req, res) {
     if(req.user.username.includes('bord') !== true){
         return res.render("panel-admin")
     }else{
@@ -119,7 +119,7 @@ app.get("/category/new", function(req, res) {
   res.render("newCategory");
 });
 
-app.get("/category", function(req, res) {
+app.get("/category",isLoggedIn, function(req, res) {
     if(req.user.username.includes('bord') !== true){
         Category.find({"shop.id": req.user._id }, function(err, foundCategories) {
             if (err) {
@@ -189,7 +189,7 @@ app.post("/category", function(req, res) {
 // =====================
 
 //NEW ROUTE
-app.get('/category/new', function (req, res) {
+app.get('/category/new',isLoggedIn, function (req, res) {
     res.render('newCategory')
 })
 
@@ -204,7 +204,7 @@ app.post('/category', function (req, res) {
     })
 });
 
-app.get('/orders', function (req, res) {
+app.get('/orders',isLoggedIn, function (req, res) {
     /*  var bestiling = {item: "Fiat", status:"done"}
 
 
@@ -226,7 +226,7 @@ app.get('/orders', function (req, res) {
     });  
 })
 
-app.get('/menu/:id', function (req, res) {
+app.get('/menu/:id',isLoggedIn, function (req, res) {
     console.log(req.params.id)
      if(req.user.username.includes('bord') !== true){
         Menu.find({ "_category": req.params.id }, function (err, foundMenus) {
@@ -252,7 +252,7 @@ app.get('/menu/:id', function (req, res) {
 });
 
 
-app.get('/menu', function (req, res) {
+app.get('/menu',isLoggedIn, function (req, res) {
     /* Menu.create(req.body.menu, function (err, newCategory) {
         if (err) {
             res.render('newCategory')
@@ -327,7 +327,7 @@ app.post('/zbale1', function (req, res) {
 
 })
 
-app.get('/newMenu/:id', function(req, res){
+app.get('/newMenu/:id',isLoggedIn, function(req, res){
     res.render('newMenu', {IDs : req.params.id})
 })
 
